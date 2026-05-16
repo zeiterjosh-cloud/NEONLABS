@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Micro SaaS Idea Generator | NeonLabs</title>
+    <meta name="description" content="Generate startup ideas, MVP plans, monetization strategies, and tech stack suggestions with NeonLabs." />
+    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      .tool-page{padding:42px 0 80px}.app-panel{display:grid;grid-template-columns:360px minmax(0,1fr);gap:18px;align-items:start}.generator-card,.ideas-output{border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.94);box-shadow:0 14px 46px rgba(20,32,27,.08);padding:22px}.form-stack{display:grid;gap:16px}.field{display:grid;gap:7px;color:var(--muted);font-weight:800}.field select{min-height:44px;border:1px solid var(--line);border-radius:8px;background:white;padding:0 12px;font:inherit}.generate-button{min-height:46px;border:0;border-radius:8px;background:var(--mint-dark);color:white;font:inherit;font-weight:900;cursor:pointer}.ideas-grid{display:grid;gap:14px}.idea-card{border:1px solid var(--line);border-radius:8px;background:white;padding:16px}.idea-card h3{margin-bottom:6px}.idea-meta{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.idea-meta span{border-radius:999px;background:#e7f5ef;color:var(--mint-dark);padding:6px 9px;font-size:.78rem;font-weight:900}.idea-card button{min-height:38px;border:1px solid var(--line);border-radius:8px;background:#101613;color:white;font:inherit;font-weight:850;cursor:pointer}@media(max-width:900px){.app-panel{grid-template-columns:1fr}}
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="./index.html"><span class="brand-mark">N</span><span>NeonLabs</span></a>
+      <nav><a href="./index.html#tools">Tools</a><a href="./roomly.html">Roomly</a><a href="./index.html#pricing">Pricing</a></nav>
+      <a class="nav-cta" href="./index.html">Home</a>
+    </header>
+    <main class="tool-page">
+      <section class="section-heading">
+        <p class="eyebrow">Startup creation</p>
+        <h1>Turn ideas into real startup concepts.</h1>
+        <p>Choose a niche, skill level, and business model. NeonLabs generates practical Micro SaaS ideas with MVP plans and monetization direction.</p>
+      </section>
+      <section class="app-panel">
+        <aside class="generator-card">
+          <div class="form-stack">
+            <label class="field">Category<select id="category"><option>AI</option><option>Fitness</option><option>Finance</option><option>Gaming</option><option>Education</option><option>Real Estate</option><option>Productivity</option></select></label>
+            <label class="field">Skill level<select id="skill"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></label>
+            <label class="field">Monetization<select id="money"><option>Subscription</option><option>Ads</option><option>One-time purchase</option><option>Affiliate</option></select></label>
+            <button class="generate-button" id="generate">Generate Ideas</button>
+          </div>
+        </aside>
+        <section class="ideas-output">
+          <div class="section-heading"><p class="eyebrow">Generated ideas</p><h2 id="outputTitle">5 AI startup ideas</h2></div>
+          <div class="ideas-grid" id="ideasGrid"></div>
+        </section>
+      </section>
+    </main>
+    <script>
+      const ideas={AI:['PromptOps Studio','Support Copilot Builder','AI Meeting Briefs','Creator Script Lab','Resume Rewrite API'],Fitness:['Remote Team Wellness','Form Check Coach','Meal Prep Planner','Habit Streak Studio','Micro Gym Scheduler'],Finance:['Invoice Radar','Budget Coach Lite','Freelance Tax Vault','Subscription Leak Finder','Cashflow Snapshot'],Gaming:['Indie Playtest Hub','Guild Event Planner','Streamer Clip CRM','Game Launch Checklist','Mod Marketplace Kit'],Education:['Study Sprint Planner','Tutor Match CRM','Quiz Pack Generator','Course Outline Builder','Parent Progress Briefs'],RealEstate:['Rental Listing Optimizer','Open House Followup','Basement Conversion Planner','Agent Content Studio','Repair Estimate Tracker'],Productivity:['Focus Sprint OS','Team SOP Builder','Client Portal Lite','Inbox Decision Helper','Weekly Review Studio']};
+      const grid=document.querySelector('#ideasGrid');
+      function render(){const category=document.querySelector('#category').value;const skill=document.querySelector('#skill').value;const money=document.querySelector('#money').value;document.querySelector('#outputTitle').textContent='5 '+category+' startup ideas';grid.innerHTML='';ideas[category].slice(0,5).forEach((name,i)=>{const card=document.createElement('article');card.className='idea-card';card.innerHTML='<h3>'+name+'</h3><p>A '+category.toLowerCase()+' Micro SaaS for '+(skill==='Beginner'?'solo builders and small teams':'growing teams and niche operators')+' that solves one painful workflow with a focused dashboard.</p><div class="idea-meta"><span>Difficulty '+(i+4)+'/10</span><span>'+money+'</span><span>'+(2+i)+'-'+(4+i)+' weeks</span></div><ul><li>Target users: creators, operators, and small businesses in '+category.toLowerCase()+'</li><li>MVP: onboarding form, generated output, saved projects, export/share feature</li><li>Tech stack: Next.js, Supabase, OpenAI API, Stripe later</li></ul><button>Steal This Idea</button>';grid.append(card)})}document.querySelector('#generate').addEventListener('click',render);render();
+    </script>
+  </body>
+</html>
