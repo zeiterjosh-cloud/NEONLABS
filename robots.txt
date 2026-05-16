@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zeiterjosh-cloud.github.io/NEONLABS/sitemap.xml
