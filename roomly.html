@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Roomly | NeonLabs</title>
+    <meta name="description" content="Roomly helps you upload a room photo and generate layout ideas, furniture placement, and redesign suggestions." />
+    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      .roomly-page{padding:42px 0 80px}.roomly-app{display:grid;grid-template-columns:340px minmax(0,1fr) 360px;gap:16px;align-items:start}.room-controls,.room-stage,.room-results{border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.94);box-shadow:0 14px 46px rgba(20,32,27,.08);padding:18px}.room-controls{display:grid;gap:15px}.field{display:grid;gap:7px;color:var(--muted);font-weight:800}.field select,.field textarea{border:1px solid var(--line);border-radius:8px;background:white;padding:11px 12px;font:inherit}.feature-list{display:grid;gap:8px;border:0;margin:0;padding:0}.feature-list legend{color:var(--muted);font-weight:900;margin-bottom:6px}.feature-list label{display:flex;gap:8px;align-items:center}.upload-zone{display:grid;place-items:center;gap:10px;min-height:130px;border:1px dashed #9aae9f;border-radius:8px;background:#f7faf7;text-align:center}.upload-zone button,.generate-button{min-height:44px;border:0;border-radius:8px;background:var(--mint-dark);color:white;font:inherit;font-weight:900;cursor:pointer}.room-stage{min-height:560px;position:relative;overflow:hidden;background:#eef4ef}.room-stage img{display:none;width:100%;height:100%;min-height:520px;object-fit:cover;border-radius:6px}.room-stage img.visible{display:block}.placeholder{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--muted);padding:24px}.overlay{position:absolute;inset:18px;display:none}.overlay.visible{display:block}.zone{position:absolute;display:grid;align-content:end;padding:10px;border:2px solid rgba(255,255,255,.8);border-radius:8px;color:white;font-weight:900;text-shadow:0 1px 12px rgba(0,0,0,.45)}.zone:nth-child(1){left:6%;bottom:8%;width:40%;height:30%;background:rgba(8,119,101,.72)}.zone:nth-child(2){right:7%;top:12%;width:30%;height:28%;background:rgba(114,87,181,.7)}.zone:nth-child(3){right:8%;bottom:10%;width:31%;height:22%;background:rgba(229,107,79,.72)}.zone:nth-child(4){left:8%;top:12%;width:25%;height:24%;background:rgba(213,150,47,.75)}.room-results{display:grid;gap:16px}.result-block{border-bottom:1px solid var(--line);padding-bottom:14px}.result-block:last-child{border-bottom:0}@media(max-width:1120px){.roomly-app{grid-template-columns:1fr}.room-stage{min-height:430px}}
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="./index.html"><span class="brand-mark">N</span><span>NeonLabs</span></a>
+      <nav><a href="./idea-generator.html">Idea Generator</a><a href="./index.html#tools">Tools</a><a href="./index.html#pricing">Pricing</a></nav>
+      <a class="nav-cta" href="./index.html">Home</a>
+    </header>
+    <main class="roomly-page">
+      <section class="section-heading"><p class="eyebrow">Roomly</p><h1>Turn any room into a fully designed space in seconds.</h1><p>Upload a room photo, choose your style, and get instant layout ideas, furniture placement, and redesign suggestions.</p></section>
+      <section class="roomly-app">
+        <aside class="room-controls">
+          <div class="upload-zone"><input id="file" type="file" accept="image/*" hidden><button id="upload" type="button">Upload room photo</button><span>Drag and drop comes later. Pick one image for now.</span></div>
+          <label class="field">Style<select id="style"><option>Modern</option><option>Minimalist</option><option>Luxury</option><option>Industrial</option></select></label>
+          <label class="field">Budget<select id="budget"><option>Low</option><option selected>Mid</option><option>Luxury</option></select></label>
+          <fieldset class="feature-list"><legend>Room goals</legend><label><input type="checkbox" value="lounge area" checked> Lounge area</label><label><input type="checkbox" value="mini bar"> Mini bar</label><label><input type="checkbox" value="gym corner"> Gym corner</label><label><input type="checkbox" value="storage wall" checked> Storage wall</label><label><input type="checkbox" value="work nook"> Work nook</label></fieldset>
+          <label class="field">Room notes<textarea id="notes" rows="4" placeholder="Low ceiling, stairs on left, no windows..."></textarea></label>
+          <button class="generate-button" id="generate" type="button">Generate Layout Plan</button>
+        </aside>
+        <section class="room-stage"><img id="preview" alt="Uploaded room preview"><div class="placeholder" id="placeholder"><div><strong>No room photo yet</strong><br>Upload a room image to see mock zoning blocks.</div></div><div class="overlay" id="overlay"></div></section>
+        <aside class="room-results"><div class="result-block"><p class="eyebrow">Suggested layout</p><p id="layout"></p></div><div class="result-block"><p class="eyebrow">Furniture placement</p><ul id="furniture"></ul></div><div class="result-block"><p class="eyebrow">Shopping direction</p><ul id="shopping"></ul></div></aside>
+      </section>
+    </main>
+    <script>
+      const profiles={Modern:['clean lines, warm contrast, recessed lighting, and low-profile furniture','sectional sofa with a slim media wall','performance fabric sectional','dimmable LED ceiling lights'],Minimalist:['open walkways, concealed storage, soft neutral tones, and fewer statement pieces','modular sofa with hidden storage ottomans','light oak storage wall','flush ceiling lighting'],Luxury:['layered lighting, rich textures, built-ins, and a polished entertainment focus','deep lounge sectional facing a feature wall','custom millwork','wall sconces and cove lighting'],Industrial:['exposed structure, durable finishes, darker contrast, and practical open shelving','leather-look sofa with black steel media console','reclaimed wood shelving','track lighting with warm bulbs']};
+      const placement={'lounge area':'Place the lounge in the widest zone with seating facing the media wall and a clear walkway behind it.','mini bar':'Set the mini bar near stairs or plumbing with upper shelving and under-counter lighting.','gym corner':'Keep the gym on resilient flooring with mirror panels and wall-mounted storage.','storage wall':'Run closed cabinets along the least attractive wall to hide clutter and utilities.','work nook':'Tuck the work nook into a quiet corner with a shallow desk and focused task light.'};
+      const file=document.querySelector('#file'),preview=document.querySelector('#preview'),placeholder=document.querySelector('#placeholder'),overlay=document.querySelector('#overlay');
+      function features(){return [...document.querySelectorAll('.feature-list input:checked')].map(i=>i.value)}
+      function li(text){const x=document.createElement('li');x.textContent=text;return x}
+      function render(){const style=document.querySelector('#style').value,budget=document.querySelector('#budget').value,notes=document.querySelector('#notes').value.trim(),p=profiles[style],f=features().length?features():['lounge area','storage wall'];document.querySelector('#layout').textContent='Create a '+style.toLowerCase()+' '+budget.toLowerCase()+'-budget room around '+p[0]+'. Anchor the plan with a '+p[1]+', then divide the room into '+f.join(', ')+' zones.'+(notes?' Work around this note: '+notes+'.':'');const furniture=document.querySelector('#furniture');furniture.innerHTML='';f.forEach(x=>furniture.append(li(placement[x])));furniture.append(li('Use '+p[3]+' so the room feels bright and finished.'));const shopping=document.querySelector('#shopping');shopping.innerHTML='';shopping.append(li(p[2]));shopping.append(li('Washable area rug and flexible accent tables'));shopping.append(li(style+' decor accents that reinforce the look without overcrowding the room.'));overlay.innerHTML='';f.slice(0,4).forEach(x=>{const z=document.createElement('div');z.className='zone';z.textContent=x;overlay.append(z)});overlay.classList.toggle('visible',preview.classList.contains('visible'))}
+      document.querySelector('#upload').addEventListener('click',()=>file.click());file.addEventListener('change',e=>{const picked=e.target.files[0];if(!picked)return;const reader=new FileReader();reader.onload=()=>{preview.src=reader.result;preview.classList.add('visible');placeholder.style.display='none';render()};reader.readAsDataURL(picked)});document.querySelector('#generate').addEventListener('click',render);document.querySelectorAll('select,.feature-list input').forEach(x=>x.addEventListener('change',render));render();
+    </script>
+  </body>
+</html>
